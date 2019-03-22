@@ -8,17 +8,17 @@ function drawTape() {
     ctx.moveTo(0,130);
     ctx.lineTo(800,130);
     // Vertical Lines
-    var x = 0
-    for(var i=0; x<=c.width; i++) {
+    var x = 0;
+    while(x<=c.width) {
         ctx.moveTo(x,70);
         ctx.lineTo(x,130);
-        x += 50
+        x += 50;
     }
 
     ctx.stroke();
 }
+// Draw Tape on screen
 drawTape();
-
 
 function processInput() {
     var canvas = document.getElementById("myCanvas");
@@ -36,6 +36,12 @@ function processInput() {
         xend += 50;
     } 
     ctx.stroke();
-    
-   
 }
+
+/*function restrictInput(evt) {
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 49))
+       return false;
+
+    return true;
+}*/

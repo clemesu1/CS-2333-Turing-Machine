@@ -1,24 +1,24 @@
-function drawTape() {
+// Draw Tape on screen
+
+function drawTape(input) {
     var c = document.getElementById("myCanvas");
     var ctx = c.getContext("2d");
-    // Top Line
-    ctx.moveTo(0,70);
-    ctx.lineTo(800,70);
-    // Bottom Line
-    ctx.moveTo(0,130);
-    ctx.lineTo(800,130);
     // Vertical Lines
     var x = 0;
-    while(x<=c.width) {
+    for(var i=0; i<=input; i++) {
         ctx.moveTo(x,70);
         ctx.lineTo(x,130);
         x += 50;
     }
-
+    tapeLength = x - 50;
+    // Top Line
+    ctx.moveTo(0,70);
+    ctx.lineTo(tapeLength,70);
+    // Bottom Line
+    ctx.moveTo(0,130);
+    ctx.lineTo(tapeLength,130);
     ctx.stroke();
 }
-// Draw Tape on screen
-drawTape();
 
 function processInput() {
     var canvas = document.getElementById("myCanvas");
@@ -35,13 +35,16 @@ function processInput() {
         xstart = xend;
         xend += 50;
     } 
+    drawTape(x.length);
     ctx.stroke();
 }
 
-/*function restrictInput(evt) {
+/*
+function restrictInput(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 49))
        return false;
 
     return true;
-}*/
+}
+*/

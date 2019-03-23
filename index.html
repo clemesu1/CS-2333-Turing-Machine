@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+    </head>
     <body>
+        <div class="wrapper">
         <canvas id="myCanvas" width="800" height="200" style="border:1px solid #d3d3d3;">
-        Your browser does not support the HTML5 canvas tag.
+            Your browser does not support the HTML5 canvas tag.
         </canvas>
-        <br>
+        <canvas id="Arrow" width="800" height="200">
+            Your browser does not support the HTML5 canvas tag.
+        </canvas>
+        </div>
         <p>Enter an input string:</p>
         <input type="text" id="left" style="width:100px" onkeypress='return restrictInput(event)'/>
         #
         <input type="text" id="right" style="width:100px" onkeypress='return restrictInput(event)'/>
         
         <button onclick="processInput()">Submit</button>
-
+        <br>
+        <br>
+        <button onclick="processPrevious()">Previous</button>
+        <button onclick="processNext()">Next</button>
         <p id="output"></p>
 
         <script src="turing.js"></script>

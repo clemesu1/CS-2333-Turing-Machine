@@ -52,8 +52,6 @@ function processInput() {
         var tapeSize = leftString.length + rightString.length + 1;
         drawTape(tapeSize);
         ctx.stroke();
-
-        
     }
     TuringMachine(leftString, rightString);
 }
@@ -89,18 +87,19 @@ function restrictInput(evt) {
 var state = true;
 
 function TuringMachine(left, right) {
-    left += '#';
+    input = left + '#' + right
     var i = 0;
     while(state == true) {
-        var leftVar = left.charAt(i);
+        var leftVar = input.charAt(i);
         drawArrow(i);
         if(leftVar == '#')
             state = false;
         left.charAt(i) = 'x';
-
+        replaceString(left, right);
         var rightVar = right.charAt(i);
-        drawArrow(left.length + i);
+        drawArrow(left + 2 + i);
         right.charAt(i) = 'x';
+        replaceString(left, right);
         if(leftVar != rightVar)
             state = false;
 
@@ -109,3 +108,34 @@ function TuringMachine(left, right) {
         i++;
     }
 }
+
+function replaceString(right, left) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = "30px Arial";
+    if(leftString.length == rightString.length) {
+        var xstart = 0;
+        var xend = 50;
+        if(xstart != 400)
+        for(var i=0; i<leftString.length; i++) {
+            var char = leftString.charAt(i);
+            ctx.fillText(char, ((xstart+xend)/2)-8, 110);
+            xstart = xend;
+            xend += 50;
+        } 
+        ctx.fillText('#', ((xstart+xend)/2)-8, 110);
+        xstart = xend;
+        xend += 50;
+        for(var i=0; i<rightString.length; i++) {
+            var char = rightString.charAt(i);
+            ctx.fillText(char, ((xstart+xend)/2)-8, 110);
+            xstart = xend;
+            xend += 50;
+        }
+        var tapeSize = leftString.length + rightString.length + 1;
+        drawTape(tapeSize);
+        ctx.stroke();
+    }
+}
+
+// Make a next and previous button that allows you to
+// view the next and previou states of the tape.

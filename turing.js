@@ -1,8 +1,8 @@
-// Draw Tape on screen
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
 
+// Draw Tape on screen
 function drawTape(input) {
-    var c = document.getElementById("myCanvas");
-    var ctx = c.getContext("2d");
     // Vertical Lines
     var x = 0;
     for(var i=0; i<=input; i++) {
@@ -19,10 +19,8 @@ function drawTape(input) {
     ctx.lineTo(tapeLength,130);
     ctx.stroke();
 }
-
+// Process Input String
 function processInput() {
-    var canvas = document.getElementById("myCanvas");
-    var ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.font = "30px Arial";
     var x = document.getElementById("myText").value;
@@ -36,6 +34,21 @@ function processInput() {
         xend += 50;
     } 
     drawTape(x.length);
+    ctx.stroke();
+}
+
+function drawArrow(x) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Arrow Vertical Line
+    ctx.moveTo(x-25,30);
+    ctx.lineTo(x-25,60);
+    // Arrow Left Side
+    ctx.moveTo(x-35,45);
+    ctx.lineTo(x-25,60);
+    // Arrow Right Size
+    ctx.moveTo(x-15,45);
+    ctx.lineTo(x-25,60);
+    // Display
     ctx.stroke();
 }
 

@@ -1,3 +1,8 @@
+/*
+                Project:
+    Needs to process the Turing Machine:
+            {w#w|w in {0,1}*}
+*/
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
@@ -23,18 +28,31 @@ function drawTape(input) {
 function processInput() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.font = "30px Arial";
-    var x = document.getElementById("myText").value;
-    var xstart = 0;
-    var xend = 50;
-    if(xstart != 400)
-    for(var i=0; i<x.length; i++) {
-        var char = x.charAt(i);
-        ctx.fillText(char, ((xstart+xend)/2)-8, 110);
+    var leftString = document.getElementById("left").value;
+    var rightString = document.getElementById("right").value;
+    if(leftString.length == rightString.length) {
+        var xstart = 0;
+        var xend = 50;
+        if(xstart != 400)
+        for(var i=0; i<leftString.length; i++) {
+            var char = leftString.charAt(i);
+            ctx.fillText(char, ((xstart+xend)/2)-8, 110);
+            xstart = xend;
+            xend += 50;
+        } 
+        ctx.fillText('#', ((xstart+xend)/2)-8, 110);
         xstart = xend;
         xend += 50;
-    } 
-    drawTape(x.length);
-    ctx.stroke();
+        for(var i=0; i<rightString.length; i++) {
+            var char = rightString.charAt(i);
+            ctx.fillText(char, ((xstart+xend)/2)-8, 110);
+            xstart = xend;
+            xend += 50;
+        }
+        var tapeSize = leftString.length + rightString.length + 1;
+        drawTape(tapeSize);
+        ctx.stroke();
+    }
 }
 
 function drawArrow(x) {
@@ -59,12 +77,6 @@ function restrictInput(evt) {
 
     return true;
 }
-
-/*
-                Project:
-    Needs to process the Turing Machine:
-            {w#w|w in {0,1}*}
-*/
 
 //
 // TODO: Make two textboxes to read first half

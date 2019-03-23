@@ -52,11 +52,18 @@ function processInput() {
         var tapeSize = leftString.length + rightString.length + 1;
         drawTape(tapeSize);
         ctx.stroke();
+
+        
     }
+    TuringMachine(leftString, rightString);
 }
 
-function drawArrow(x) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+// Draw Arrow on screen over specified tape
+function drawArrow(position) {
+    // Get position
+    var x = 0;
+    for(var i=0; i<=position; i++)
+        x += 50;
     // Arrow Vertical Line
     ctx.moveTo(x-25,30);
     ctx.lineTo(x-25,60);
@@ -70,6 +77,7 @@ function drawArrow(x) {
     ctx.stroke();
 }
 
+// Restrict input to binary values
 function restrictInput(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 49))
@@ -78,7 +86,26 @@ function restrictInput(evt) {
     return true;
 }
 
-//
-// TODO: Make two textboxes to read first half
-//       and second half of string, with # symbol
-//       in between. And draw on canvas
+var state = true;
+
+function TuringMachine(left, right) {
+    left += '#';
+    var i = 0;
+    while(state == true) {
+        var leftVar = left.charAt(i);
+        drawArrow(i);
+        if(leftVar == '#')
+            state = false;
+        left.charAt(i) = 'x';
+
+        var rightVar = right.charAt(i);
+        drawArrow(left.length + i);
+        right.charAt(i) = 'x';
+        if(leftVar != rightVar)
+            state = false;
+
+        if(left.charAt(i) != 'x' || right.charAt(i) != 'x')
+            state = false;
+        i++;
+    }
+}

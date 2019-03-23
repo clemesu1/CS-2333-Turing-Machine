@@ -52,7 +52,6 @@ function drawArrow(x) {
     ctx.stroke();
 }
 
-/*
 function restrictInput(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 49))
@@ -60,4 +59,14 @@ function restrictInput(evt) {
 
     return true;
 }
+
+/*
+                Project:
+    Needs to process the Turing Machine:
+            {w#w|w in {0,1}*}
 */
+
+//
+// TODO: Make two textboxes to read first half
+//       and second half of string, with # symbol
+//       in between. And draw on canvas

@@ -6,7 +6,7 @@
         </canvas>
         <br>
         <p>Enter an input string:</p>
-        <input type="text" id="myText">
+        <input type="text" id="myText" onkeypress='return restrictInput(event)'/>
         
 
         <button onclick="processInput()">Submit</button>

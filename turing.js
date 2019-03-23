@@ -4,11 +4,13 @@
             {w#w|w in {0,1}*}
 */
 
-var canvas = document.getElementById("myCanvas");
+var canvas = document.getElementById("Tape");
 var ctx = canvas.getContext("2d");
-var arrowCanvas = document.getElementById("myCanvas");
+var arrowCanvas = document.getElementById("Arrow");
 var actx = arrowCanvas.getContext("2d");
-ctx.font = "30px Arial"
+var numCanvas = document.getElementById("Numbers");
+var nctx = numCanvas.getContext("2d");
+nctx.font = "30px Arial"
 drawTape();
 // Draw Tape on screen
 function drawTape() {
@@ -33,7 +35,7 @@ var leftString;
 var rightString;
 // Process Input String
 function processInput() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    nctx.clearRect(0, 0, canvas.width, canvas.height);
 
     leftString = document.getElementById("left").value;
     rightString = document.getElementById("right").value;
@@ -43,27 +45,27 @@ function processInput() {
         if(xstart != 400)
         for(var i=0; i<leftString.length; i++) {
             var char = leftString.charAt(i);
-            ctx.fillText(char, ((xstart+xend)/2)-8, 110);
+            nctx.fillText(char, ((xstart+xend)/2)-8, 110);
             xstart = xend;
             xend += 50;
         } 
-        ctx.fillText('#', ((xstart+xend)/2)-8, 110);
+        nctx.fillText('#', ((xstart+xend)/2)-8, 110);
         xstart = xend;
         xend += 50;
         for(var i=0; i<rightString.length; i++) {
             var char = rightString.charAt(i);
-            ctx.fillText(char, ((xstart+xend)/2)-8, 110);
+            nctx.fillText(char, ((xstart+xend)/2)-8, 110);
             xstart = xend;
             xend += 50;
         }
         var tapeSize = leftString.length + rightString.length + 1;
-        drawTape(tapeSize);
-        ctx.stroke();
+        nctx.stroke();
     }
 }
 
 // Draw Arrow on screen over specified tape
 function drawArrow(position) {
+    actx.beginPath();
     if(start) {
         // Get position
         var x = 0;
@@ -95,6 +97,7 @@ function restrictInput(evt) {
 var state = true;
 
 function replaceString(left, right) {
+    nctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if(left.length == right.length) {
         var xstart = 0;
@@ -103,22 +106,21 @@ function replaceString(left, right) {
         if(xstart != 400)
         for(var i=0; i<left.length; i++) {
             var char = left.charAt(i);
-            ctx.fillText(char, ((xstart+xend)/2)-8, 110);
+            nctx.fillText(char, ((xstart+xend)/2)-8, 110);
             xstart = xend;
             xend += 50;
         } 
-        ctx.fillText('#', ((xstart+xend)/2)-8, 110);
+        nctx.fillText('#', ((xstart+xend)/2)-8, 110);
         xstart = xend;
         xend += 50;
         for(var i=0; i<right.length; i++) {
             var char = right.charAt(i);
-            ctx.fillText(char, ((xstart+xend)/2)-8, 110);
+            nctx.fillText(char, ((xstart+xend)/2)-8, 110);
             xstart = xend;
             xend += 50;
         }
         var tapeSize = left.length + right.length + 1;
-        drawTape(tapeSize);
-        ctx.stroke();
+        nctx.stroke();
     }
 }
 
@@ -129,6 +131,7 @@ var leftCheck = false;
 var rightCheck = false;
 var totalString = leftString + '#' + rightString;
 function processNext() {
+    actx.clearRect(0, 0, canvas.width, canvas.height);
     if(!isEmpty(leftString)) {
         if(start != false) {
             var leftSize = leftString.length; // Get size of left String

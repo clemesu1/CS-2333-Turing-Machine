@@ -154,6 +154,7 @@ function processNext() {
                     else {
                         rightCheck = false;
                         drawArrow(leftIndex);
+                        console.log(leftIndex, rightIndex);
                         leftCheck = true;
                     }    
                 }
@@ -168,12 +169,12 @@ function processNext() {
                     replaceString(leftString, rightString);
                     if(leftVar != rightVar) {
                         document.getElementById("output").innerHTML = "Rejected";
-                        leftIndex = 0;
-                }
+                        leftIndex--;
+                    }
+                    //leftIndex++;
                     leftCheck = false;
                 }
             }
-            
         }
         else {
             start = true;

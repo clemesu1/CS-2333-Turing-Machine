@@ -35,7 +35,10 @@ var leftString;
 var rightString;
 // Process Input String
 function processInput() {
+    actx.clearRect(0, 0, canvas.width, canvas.height);
     nctx.clearRect(0, 0, canvas.width, canvas.height);
+    leftIndex = 0;
+    rightIndex = 0;
 
     leftString = document.getElementById("left").value;
     rightString = document.getElementById("right").value;
@@ -96,13 +99,12 @@ function restrictInput(evt) {
 
 var state = true;
 
+
 function replaceString(left, right) {
     nctx.clearRect(0, 0, canvas.width, canvas.height);
-
     if(left.length == right.length) {
         var xstart = 0;
         var xend = 50;
-        console.log(left, right);
         if(xstart != 400)
         for(var i=0; i<left.length; i++) {
             var char = left.charAt(i);
@@ -126,40 +128,59 @@ function replaceString(left, right) {
 
 var leftIndex = 0;
 var rightIndex = 0;
-var start = false;
 var leftCheck = false;
 var rightCheck = false;
+var leftVar;
+var rightVar;
+var start = false;
 var totalString = leftString + '#' + rightString;
+var size;
 function processNext() {
     actx.clearRect(0, 0, canvas.width, canvas.height);
     if(!isEmpty(leftString)) {
         if(start != false) {
-            var leftSize = leftString.length; // Get size of left String
-            var leftVar = leftString.charAt(leftIndex); // Get character at index in leftString
-            leftString = setCharAt(leftString, leftIndex, 'x'); // Replace character at index with 'x'
-             // Draw updated String
-
-            if(leftString.charAt(leftIndex) === 'x') {
-                leftIndex++;
-                 // Draw updated String
-                drawArrow(leftIndex);
-                
+            size = leftString.length; // Get size of left String
+            if(leftCheck == false) {
+                rightCheck = false;
+                leftVar = leftString.charAt(leftIndex); // Get character at index in leftString
+                leftString = setCharAt(leftString, leftIndex, 'x'); // Replace character at index with 'x'
+                replaceString(leftString, rightString);
+                if(leftString.charAt(leftIndex) === 'x') {
+                    leftIndex++;
+                    drawArrow(leftIndex);
+                    leftCheck = true;
+                    
+                    
+                }
             }
+            else if(rightCheck == false) {
+                if(totalString.charAt(leftIndex) === 'n' && leftCheck == true) {
+                    drawArrow(size + 1 + rightIndex);
+                    rightVar = rightString.charAt(rightIndex);
+                    rightCheck = true;
+                    rightString = setCharAt(rightString, rightIndex, 'x');
+                    replaceString(leftString, rightString);
+                    if(leftVar != rightVar) {
+                        document.getElementById("output").innerHTML = "Rejected";
+                        leftIndex = 0;
+                }
+                    leftCheck = false;
+                }
+            }
+            
         }
         else {
             start = true;
             drawArrow(leftIndex);
             replaceString(leftString, rightString);
         }
+        
     }
 }
 
 function processPrevious() {
     
 }
-
-// Make a next and previous button that allows you to
-// view the next and previous states of the tape.
 
 function setCharAt(str,index,chr) {
     if(index > str.length-1) return str;
@@ -168,4 +189,16 @@ function setCharAt(str,index,chr) {
 
 function isEmpty(str) {
     return (!str || 0 === str.length);
+}
+
+for(var i=0; i<size; i++) {
+    if(leftString.charAt(i) === 'x' && rightString.charAt(i) === 'x') {
+        console.log(i, size)
+        if(i == size ) {
+            if(rightCheck == false) {
+                document.getElementById("output").innerHTML = "Accepted";
+                drawArrow(leftString.length + rightString.length + 1);
+            }
+        }
+    }
 }

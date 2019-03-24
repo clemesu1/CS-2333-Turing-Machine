@@ -135,22 +135,27 @@ var rightVar;
 var start = false;
 var totalString = leftString + '#' + rightString;
 var size;
+var counter;
 function processNext() {
     actx.clearRect(0, 0, canvas.width, canvas.height);
     if(!isEmpty(leftString)) {
         if(start != false) {
             size = leftString.length; // Get size of left String
             if(leftCheck == false) {
-                rightCheck = false;
                 leftVar = leftString.charAt(leftIndex); // Get character at index in leftString
                 leftString = setCharAt(leftString, leftIndex, 'x'); // Replace character at index with 'x'
                 replaceString(leftString, rightString);
                 if(leftString.charAt(leftIndex) === 'x') {
-                    leftIndex++;
-                    drawArrow(leftIndex);
-                    leftCheck = true;
-                    
-                    
+                    if(rightCheck == false) {
+                        leftIndex++;
+                        drawArrow(leftIndex);
+                        leftCheck = true;
+                    }
+                    else {
+                        rightCheck = false;
+                        drawArrow(leftIndex);
+                        leftCheck = true;
+                    }    
                 }
             }
             else if(rightCheck == false) {
@@ -159,6 +164,7 @@ function processNext() {
                     rightVar = rightString.charAt(rightIndex);
                     rightCheck = true;
                     rightString = setCharAt(rightString, rightIndex, 'x');
+                    rightIndex++;
                     replaceString(leftString, rightString);
                     if(leftVar != rightVar) {
                         document.getElementById("output").innerHTML = "Rejected";

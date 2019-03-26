@@ -1,3 +1,31 @@
+html {
+    background-color: lightblue;
+    font-family: "Comic Sans MS";
+    font-size: 20px;
+}
+
+button {
+    background-color: navy; /* Green */
+    font-family: "Comic Sans MS";
+    border: none;
+    border-radius: 100%;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+
+}
+
+canvas {
+    border: 2px solid #d3d3d3;
+}
+
+.canvas {
+    background-color: white;
+}
+
 .wrapper {
     position: relative;
     width: 400px;

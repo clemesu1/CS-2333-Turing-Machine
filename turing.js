@@ -10,7 +10,7 @@ var arrowCanvas = document.getElementById("Arrow");
 var actx = arrowCanvas.getContext("2d");
 var numCanvas = document.getElementById("Numbers");
 var nctx = numCanvas.getContext("2d");
-nctx.font = "30px Arial"
+nctx.font = "30px Comic Sans MS";
 drawTape();
 // Draw Tape on screen
 function drawTape() {
@@ -116,6 +116,7 @@ function runMachine(totalString) {
     q1(totalString, head);
     
     function q1(totalString, head) {
+        drawArrow(head);
         if(totalString.charAt(head) == '#') {
             q8(totalString, head);
         }

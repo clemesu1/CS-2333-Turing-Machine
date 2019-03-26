@@ -67,7 +67,6 @@ function checkString(right, left) {
     totalString = left + '#' + right;
     return totalString;
 }
-
 var complete = false;
 // Draw Arrow on screen over specified tape
 function drawArrow(position) {
@@ -75,7 +74,6 @@ function drawArrow(position) {
     for(var i=0; i<=position; i++)
         x += 50; 
     actx.clearRect(0, 0, canvas.width, canvas.height);
-
     actx.beginPath();
     // Arrow Vertical Line
     actx.moveTo(x-25,30);
@@ -111,23 +109,19 @@ function replaceString(totalString) {
     } 
     nctx.stroke();
 }
-var size;
 
-// Boolean to check if step has been taken,
 function runMachine(totalString) {
     
     var head = 0;
     q1(totalString, head);
-
     
     function q1(totalString, head) {
-        setInterval(drawArrow(head), 1000);
         if(totalString.charAt(head) == '#') {
             q8(totalString, head);
         }
         else if(totalString.charAt(head) == '0')  {
             totalString = setCharAt(totalString, head, 'x');
-            replaceString(totalString);
+            setInterval(replaceString(totalString), 1000);
             head++;
             q2(totalString, head);
         }
@@ -140,7 +134,6 @@ function runMachine(totalString) {
     }
 
     function q2(totalString, head) {
-        setInterval(drawArrow(head), 1000);
         if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
             head++;
             q2(totalString, head);
@@ -152,7 +145,6 @@ function runMachine(totalString) {
     }
 
     function q3(totalString, head) {
-        setInterval(drawArrow(head), 1000);
         if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
             head++;
             q3(totalString, head);
@@ -164,7 +156,7 @@ function runMachine(totalString) {
     }
 
     function q4(totalString, head) {
-        setInterval(drawArrow(head), 1000);
+        timer = setInterval(drawArrow(head), 1000);
         if(totalString.charAt(head) == 'x') {
             head++;
             q4(totalString, head);
@@ -178,8 +170,6 @@ function runMachine(totalString) {
     }
 
     function q5(totalString, head) {
-        setInterval(drawArrow(head), 1000);
-        clearInterval()
         if(totalString.charAt(head) == 'x') {
             head++;
             q5(totalString, head);
@@ -193,7 +183,6 @@ function runMachine(totalString) {
     }
 
     function q6(totalString, head) {
-        setInterval(drawArrow(head), 1000);
         if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1' || totalString.charAt(head) == 'x') {
             head--;
             q6(totalString, head);
@@ -205,7 +194,6 @@ function runMachine(totalString) {
     }
 
     function q7(totalString, head) {
-        setInterval(drawArrow(head), 1000);
         if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
             head--;
             q7(totalString, head);
@@ -217,7 +205,6 @@ function runMachine(totalString) {
     }
 
     function q8(totalString, head) {
-        setInterval(drawArrow(head), 1000);
         if(totalString.charAt(head) == 'x') {
             head++;
             q8(totalString, head);
@@ -229,7 +216,6 @@ function runMachine(totalString) {
     }
 
     function qAccept(totalString, head) {
-        setInterval(drawArrow(head), 1000);
         complete = true;
     }
 }

@@ -216,6 +216,7 @@ function runMachine(totalString) {
     }
 
     function qAccept(totalString, head) {
+        document.getElementById("output").innerHTML = "Accepted";
         complete = true;
     }
 }

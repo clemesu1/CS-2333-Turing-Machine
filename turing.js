@@ -68,14 +68,15 @@ function checkString(right, left) {
     return totalString;
 }
 
+var complete = false;
 // Draw Arrow on screen over specified tape
 function drawArrow(position) {
-    actx.clearRect(0, 0, canvas.width, canvas.height);
-    actx.beginPath();
-    // Get position
     var x = 0;
     for(var i=0; i<=position; i++)
-        x += 50;
+        x += 50; 
+    actx.clearRect(0, 0, canvas.width, canvas.height);
+
+    actx.beginPath();
     // Arrow Vertical Line
     actx.moveTo(x-25,30);
     actx.lineTo(x-25,60);
@@ -85,7 +86,6 @@ function drawArrow(position) {
     // Arrow Right Size
     actx.moveTo(x-15,45);
     actx.lineTo(x-25,60);
-    // Display
     actx.stroke();
 }
 
@@ -97,149 +97,141 @@ function restrictInput(evt) {
     return true;
 }
 
-var state = true;
+function replaceString(totalString) {
 
-
-function replaceString(left, right) {
     nctx.clearRect(0, 0, canvas.width, canvas.height);
-    if(left.length == right.length) {
-        var xstart = 0;
-        var xend = 50;
-        if(xstart != 400)
-        for(var i=0; i<left.length; i++) {
-            var char = left.charAt(i);
-            nctx.fillText(char, ((xstart+xend)/2)-8, 110);
-            xstart = xend;
-            xend += 50;
-        } 
-        nctx.fillText('#', ((xstart+xend)/2)-8, 110);
+    var xstart = 0;
+    var xend = 50;
+    if(xstart != 400)
+    for(var i=0; i<totalString.length; i++) {
+        var char = totalString.charAt(i);
+        nctx.fillText(char, ((xstart+xend)/2)-8, 110);
         xstart = xend;
         xend += 50;
-        for(var i=0; i<right.length; i++) {
-            var char = right.charAt(i);
-            nctx.fillText(char, ((xstart+xend)/2)-8, 110);
-            xstart = xend;
-            xend += 50;
-        }
-        var tapeSize = left.length + right.length + 1;
-        nctx.stroke();
-    }
+    } 
+    nctx.stroke();
 }
 var size;
 
 // Boolean to check if step has been taken,
 function runMachine(totalString) {
+    
     var head = 0;
-    console.log()
     q1(totalString, head);
-}
 
-function q1(totalString, head) {
-    drawArrow(head);
-    if(totalString.charAt(head) == '#') {
-        q8(totalString, head);
+    
+    function q1(totalString, head) {
+        setInterval(drawArrow(head), 1000);
+        if(totalString.charAt(head) == '#') {
+            q8(totalString, head);
+        }
+        else if(totalString.charAt(head) == '0')  {
+            totalString = setCharAt(totalString, head, 'x');
+            replaceString(totalString);
+            head++;
+            q2(totalString, head);
+        }
+        else if(totalString.charAt(head) == '1')  {
+            totalString = setCharAt(totalString, head, 'x');
+            replaceString(totalString);
+            head++;
+            q3(totalString, head);
+        }
     }
-    else if(totalString.charAt(head) == '0')  {
-        totalString = setCharAt(totalString, head, 'x');
-        head++;
-        q2(totalString, head);
-    }
-    else if(totalString.charAt(head) == '1')  {
-        totalString = setCharAt(totalString, head, 'x');
-        head++;
-        q3(totalString, head);
-    }
-}
 
-function q2(totalString, head) {
-    drawArrow(head);
-    if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
-        head++;
-        q2(totalString, head);
+    function q2(totalString, head) {
+        setInterval(drawArrow(head), 1000);
+        if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
+            head++;
+            q2(totalString, head);
+        }
+        else if(totalString.charAt(head) == '#') {
+            head++;
+            q4(totalString, head);
+        }
     }
-    else if(totalString.charAt(head) == '#') {
-        head++;
-        q4(totalString, head);
-    }
-}
 
-function q3(totalString, head) {
-    drawArrow(head);
-    if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
-        head++;
-        q3(totalString, head);
+    function q3(totalString, head) {
+        setInterval(drawArrow(head), 1000);
+        if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
+            head++;
+            q3(totalString, head);
+        }
+        else if(totalString.charAt(head) == '#') {
+            head++;
+            q5(totalString, head);
+        }
     }
-    else if(totalString.charAt(head) == '#') {
-        head++;
-        q5(totalString, head);
-    }
-}
 
-function q4(totalString, head) {
-    drawArrow(head);
-    if(totalString.charAt(head) == 'x') {
-        head++;
-        q4(totalString, head);
+    function q4(totalString, head) {
+        setInterval(drawArrow(head), 1000);
+        if(totalString.charAt(head) == 'x') {
+            head++;
+            q4(totalString, head);
+        }
+        else if(totalString.charAt(head) == '0') {
+            totalString = setCharAt(totalString, head, 'x');
+            replaceString(totalString);
+            head--;
+            q6(totalString, head);
+        }
     }
-    else if(totalString.charAt(head) == '0') {
-        totalString = setCharAt(totalString, head, 'x');
-        head--;
-        q6(totalString, head);
-    }
-}
 
-function q5(totalString, head) {
-    drawArrow(head);
-    if(totalString.charAt(head) == 'x') {
-        head++;
-        q5(totalString, head);
+    function q5(totalString, head) {
+        setInterval(drawArrow(head), 1000);
+        clearInterval()
+        if(totalString.charAt(head) == 'x') {
+            head++;
+            q5(totalString, head);
+        }
+        else if(totalString.charAt(head) == '1') {
+            totalString = setCharAt(totalString, head, 'x');
+            replaceString(totalString);
+            head--;
+            q6(totalString, head);
+        }
     }
-    else if(totalString.charAt(head) == '1') {
-        totalString = setCharAt(totalString, head, 'x');
-        head--;
-        q6(totalString, head);
-    }
-}
 
-function q6(totalString, head) {
-    drawArrow(head);
-    if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1' || totalString.charAt(head) == 'x') {
-        head--;
-        q6(totalString, head);
+    function q6(totalString, head) {
+        setInterval(drawArrow(head), 1000);
+        if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1' || totalString.charAt(head) == 'x') {
+            head--;
+            q6(totalString, head);
+        }
+        else if(totalString.charAt(head) == '#') {
+            head--;
+            q7(totalString, head);
+        }
     }
-    else if(totalString.charAt(head) == '#') {
-        head--;
-        q7(totalString, head);
-    }
-}
 
-function q7(totalString, head) {
-    drawArrow(head);
-    if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
-        head--;
-        q7(totalString, head);
+    function q7(totalString, head) {
+        setInterval(drawArrow(head), 1000);
+        if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
+            head--;
+            q7(totalString, head);
+        }
+        else if(totalString.charAt(head) == 'x') {
+            head++;
+            q1(totalString, head);
+        }
     }
-    else if(totalString.charAt(head) == 'x') {
-        head++;
-        q1(totalString, head);
-    }
-}
 
-function q8(totalString, head) {
-    drawArrow(head);
-    if(totalString.charAt(head) == 'x') {
-        head++;
-        q8(totalString, head);
+    function q8(totalString, head) {
+        setInterval(drawArrow(head), 1000);
+        if(totalString.charAt(head) == 'x') {
+            head++;
+            q8(totalString, head);
+        }
+        else {
+            head++;
+            qAccept(totalString, head);
+        }
     }
-    else {
-        head++;
-        qAccept(totalString, head);
-    }
-}
 
-function qAccept(totalString, head) {
-    drawArrow(head);
-    document.getElementById("output").innerHTML = "Accepted";
+    function qAccept(totalString, head) {
+        setInterval(drawArrow(head), 1000);
+        complete = true;
+    }
 }
 
 function setCharAt(str,index,chr) {

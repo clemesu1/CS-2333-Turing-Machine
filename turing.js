@@ -43,49 +43,50 @@ function processInput() {
     leftString = document.getElementById("left").value;
     rightString = document.getElementById("right").value;
     if(leftString.length == rightString.length) {
+        var totalString = checkString(leftString, rightString);
         var xstart = 0;
         var xend = 50;
         if(xstart != 400)
-        for(var i=0; i<leftString.length; i++) {
-            var char = leftString.charAt(i);
+        for(var i=0; i<totalString.length; i++) {
+            var char = totalString.charAt(i);
             nctx.fillText(char, ((xstart+xend)/2)-8, 110);
             xstart = xend;
             xend += 50;
         } 
-        nctx.fillText('#', ((xstart+xend)/2)-8, 110);
-        xstart = xend;
-        xend += 50;
-        for(var i=0; i<rightString.length; i++) {
-            var char = rightString.charAt(i);
-            nctx.fillText(char, ((xstart+xend)/2)-8, 110);
-            xstart = xend;
-            xend += 50;
-        }
         var tapeSize = leftString.length + rightString.length + 1;
         nctx.stroke();
     }
+    runMachine(totalString);
+}
+
+function checkString(right, left) {
+    if(left == null)
+        left = "";
+    if(right == null)
+        right = "";
+    totalString = left + '#' + right;
+    return totalString;
 }
 
 // Draw Arrow on screen over specified tape
 function drawArrow(position) {
+    actx.clearRect(0, 0, canvas.width, canvas.height);
     actx.beginPath();
-    if(start) {
-        // Get position
-        var x = 0;
-        for(var i=0; i<=position; i++)
-            x += 50;
-        // Arrow Vertical Line
-        actx.moveTo(x-25,30);
-        actx.lineTo(x-25,60);
-        // Arrow Left Side
-        actx.moveTo(x-35,45);
-        actx.lineTo(x-25,60);
-        // Arrow Right Size
-        actx.moveTo(x-15,45);
-        actx.lineTo(x-25,60);
-        // Display
-        actx.stroke();
-    }
+    // Get position
+    var x = 0;
+    for(var i=0; i<=position; i++)
+        x += 50;
+    // Arrow Vertical Line
+    actx.moveTo(x-25,30);
+    actx.lineTo(x-25,60);
+    // Arrow Left Side
+    actx.moveTo(x-35,45);
+    actx.lineTo(x-25,60);
+    // Arrow Right Size
+    actx.moveTo(x-15,45);
+    actx.lineTo(x-25,60);
+    // Display
+    actx.stroke();
 }
 
 // Restrict input to binary values
@@ -93,7 +94,6 @@ function restrictInput(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 49))
        return false;
-
     return true;
 }
 
@@ -125,68 +125,121 @@ function replaceString(left, right) {
         nctx.stroke();
     }
 }
-
-var leftIndex = 0;
-var rightIndex = 0;
-var leftCheck = false;
-var rightCheck = false;
-var leftVar;
-var rightVar;
-var start = false;
-var totalString = leftString + '#' + rightString;
 var size;
-var counter;
-function processNext() {
-    actx.clearRect(0, 0, canvas.width, canvas.height);
-    if(!isEmpty(leftString)) {
-        if(start != false) {
-            size = leftString.length; // Get size of left String
-            if(leftCheck == false) {
-                leftVar = leftString.charAt(leftIndex); // Get character at index in leftString
-                leftString = setCharAt(leftString, leftIndex, 'x'); // Replace character at index with 'x'
-                replaceString(leftString, rightString);
-                if(leftString.charAt(leftIndex) === 'x') {
-                    if(rightCheck == false) {
-                        leftIndex++;
-                        drawArrow(leftIndex);
-                        leftCheck = true;
-                    }
-                    else {
-                        rightCheck = false;
-                        drawArrow(leftIndex);
-                        console.log(leftIndex, rightIndex);
-                        leftCheck = true;
-                    }    
-                }
-            }
-            else if(rightCheck == false) {
-                if(totalString.charAt(leftIndex) === 'n' && leftCheck == true) {
-                    drawArrow(size + 1 + rightIndex);
-                    rightVar = rightString.charAt(rightIndex);
-                    rightCheck = true;
-                    rightString = setCharAt(rightString, rightIndex, 'x');
-                    rightIndex++;
-                    replaceString(leftString, rightString);
-                    if(leftVar != rightVar) {
-                        document.getElementById("output").innerHTML = "Rejected";
-                        leftIndex--;
-                    }
-                    //leftIndex++;
-                    leftCheck = false;
-                }
-            }
-        }
-        else {
-            start = true;
-            drawArrow(leftIndex);
-            replaceString(leftString, rightString);
-        }
-        
+
+// Boolean to check if step has been taken,
+function runMachine(totalString) {
+    var head = 0;
+    console.log()
+    q1(totalString, head);
+}
+
+function q1(totalString, head) {
+    drawArrow(head);
+    if(totalString.charAt(head) == '#') {
+        q8(totalString, head);
+    }
+    else if(totalString.charAt(head) == '0')  {
+        totalString = setCharAt(totalString, head, 'x');
+        head++;
+        q2(totalString, head);
+    }
+    else if(totalString.charAt(head) == '1')  {
+        totalString = setCharAt(totalString, head, 'x');
+        head++;
+        q3(totalString, head);
     }
 }
 
-function processPrevious() {
-    
+function q2(totalString, head) {
+    drawArrow(head);
+    if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
+        head++;
+        q2(totalString, head);
+    }
+    else if(totalString.charAt(head) == '#') {
+        head++;
+        q4(totalString, head);
+    }
+}
+
+function q3(totalString, head) {
+    drawArrow(head);
+    if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
+        head++;
+        q3(totalString, head);
+    }
+    else if(totalString.charAt(head) == '#') {
+        head++;
+        q5(totalString, head);
+    }
+}
+
+function q4(totalString, head) {
+    drawArrow(head);
+    if(totalString.charAt(head) == 'x') {
+        head++;
+        q4(totalString, head);
+    }
+    else if(totalString.charAt(head) == '0') {
+        totalString = setCharAt(totalString, head, 'x');
+        head--;
+        q6(totalString, head);
+    }
+}
+
+function q5(totalString, head) {
+    drawArrow(head);
+    if(totalString.charAt(head) == 'x') {
+        head++;
+        q5(totalString, head);
+    }
+    else if(totalString.charAt(head) == '1') {
+        totalString = setCharAt(totalString, head, 'x');
+        head--;
+        q6(totalString, head);
+    }
+}
+
+function q6(totalString, head) {
+    drawArrow(head);
+    if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1' || totalString.charAt(head) == 'x') {
+        head--;
+        q6(totalString, head);
+    }
+    else if(totalString.charAt(head) == '#') {
+        head--;
+        q7(totalString, head);
+    }
+}
+
+function q7(totalString, head) {
+    drawArrow(head);
+    if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
+        head--;
+        q7(totalString, head);
+    }
+    else if(totalString.charAt(head) == 'x') {
+        head++;
+        q1(totalString, head);
+    }
+}
+
+function q8(totalString, head) {
+    drawArrow(head);
+    if(totalString.charAt(head) == 'x') {
+        head++;
+        q8(totalString, head);
+    }
+    else {
+        head++;
+        qAccept(totalString, head);
+    }
+}
+
+function qAccept(totalString, head) {
+    drawArrow(head);
+    document.getElementById("output").innerHTML = "Accepted";
 }
 
 function setCharAt(str,index,chr) {
@@ -196,16 +249,4 @@ function setCharAt(str,index,chr) {
 
 function isEmpty(str) {
     return (!str || 0 === str.length);
-}
-
-for(var i=0; i<size; i++) {
-    if(leftString.charAt(i) === 'x' && rightString.charAt(i) === 'x') {
-        console.log(i, size)
-        if(i == size ) {
-            if(rightCheck == false) {
-                document.getElementById("output").innerHTML = "Accepted";
-                drawArrow(leftString.length + rightString.length + 1);
-            }
-        }
-    }
 }

@@ -9,16 +9,17 @@ button {
     font-family: "Comic Sans MS";
     border: none;
     border-radius: 100%;
+    margin-left: 10px;
     color: white;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-
 }
 
 input {
+    background-color: rgb(185, 214, 224);
     font-family: "Comic Sans MS";
     font-size: 16px;
 }

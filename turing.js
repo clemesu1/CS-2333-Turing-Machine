@@ -135,6 +135,7 @@ function runMachine(totalString) {
     }
 
     function q2(totalString, head) {
+        drawArrow(head);
         if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
             head++;
             q2(totalString, head);
@@ -146,6 +147,7 @@ function runMachine(totalString) {
     }
 
     function q3(totalString, head) {
+        drawArrow(head);
         if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
             head++;
             q3(totalString, head);
@@ -157,6 +159,7 @@ function runMachine(totalString) {
     }
 
     function q4(totalString, head) {
+        drawArrow(head);
         timer = setInterval(drawArrow(head), 1000);
         if(totalString.charAt(head) == 'x') {
             head++;
@@ -171,6 +174,7 @@ function runMachine(totalString) {
     }
 
     function q5(totalString, head) {
+        drawArrow(head);
         if(totalString.charAt(head) == 'x') {
             head++;
             q5(totalString, head);
@@ -184,6 +188,7 @@ function runMachine(totalString) {
     }
 
     function q6(totalString, head) {
+        drawArrow(head);
         if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1' || totalString.charAt(head) == 'x') {
             head--;
             q6(totalString, head);
@@ -195,6 +200,7 @@ function runMachine(totalString) {
     }
 
     function q7(totalString, head) {
+        drawArrow(head);
         if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
             head--;
             q7(totalString, head);
@@ -206,6 +212,7 @@ function runMachine(totalString) {
     }
 
     function q8(totalString, head) {
+        drawArrow(head);
         if(totalString.charAt(head) == 'x') {
             head++;
             q8(totalString, head);
@@ -217,7 +224,9 @@ function runMachine(totalString) {
     }
 
     function qAccept(totalString, head) {
-        document.getElementById("output").innerHTML = "Accepted";
+        drawArrow(head);
+        if(leftString != "" || rightString != "")
+            document.getElementById("output").innerHTML = "Accepted";
         complete = true;
     }
 }

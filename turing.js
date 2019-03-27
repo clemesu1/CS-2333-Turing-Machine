@@ -119,117 +119,159 @@ function runMachine(totalString) {
     q1(totalString, head);
     
     function q1(totalString, head) {
-        drawArrow(head);
         if(totalString.charAt(head) == '#') {
+            drawArrow(head);
             q8(totalString, head);
         }
         else if(totalString.charAt(head) == '0')  {
+            drawArrow(head);
             totalString = setCharAt(totalString, head, 'x');
             setInterval(replaceString(totalString), 1000);
             head++;
             q2(totalString, head);
         }
         else if(totalString.charAt(head) == '1')  {
+            drawArrow(head);
             totalString = setCharAt(totalString, head, 'x');
             replaceString(totalString);
             head++;
             q3(totalString, head);
+        }
+        else {
+            drawArrow(head);
+            document.getElementById("output").innerHTML = "Rejected";
         }
     }
 
     function q2(totalString, head) {
-        drawArrow(head);
         if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
+            drawArrow(head);
             head++;
             q2(totalString, head);
         }
         else if(totalString.charAt(head) == '#') {
+            drawArrow(head);
             head++;
             q4(totalString, head);
+        }
+        else {
+            drawArrow(head);
+            document.getElementById("output").innerHTML = "Rejected";
         }
     }
 
     function q3(totalString, head) {
-        drawArrow(head);
         if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
+            drawArrow(head);
             head++;
             q3(totalString, head);
         }
         else if(totalString.charAt(head) == '#') {
+            drawArrow(head);
             head++;
             q5(totalString, head);
+        }
+        else {
+            drawArrow(head);
+            document.getElementById("output").innerHTML = "Rejected";
         }
     }
 
     function q4(totalString, head) {
-        drawArrow(head);
-        timer = setInterval(drawArrow(head), 1000);
         if(totalString.charAt(head) == 'x') {
+            drawArrow(head);
             head++;
             q4(totalString, head);
         }
         else if(totalString.charAt(head) == '0') {
+            drawArrow(head);
             totalString = setCharAt(totalString, head, 'x');
             replaceString(totalString);
             head--;
             q6(totalString, head);
+        }
+        else {
+            drawArrow(head);
+            document.getElementById("output").innerHTML = "Rejected";
         }
     }
 
     function q5(totalString, head) {
-        drawArrow(head);
         if(totalString.charAt(head) == 'x') {
+            drawArrow(head);
             head++;
             q5(totalString, head);
         }
         else if(totalString.charAt(head) == '1') {
+            drawArrow(head);
             totalString = setCharAt(totalString, head, 'x');
             replaceString(totalString);
             head--;
             q6(totalString, head);
         }
+        else {
+            drawArrow(head);
+            document.getElementById("output").innerHTML = "Rejected";
+        }
     }
 
     function q6(totalString, head) {
-        drawArrow(head);
         if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1' || totalString.charAt(head) == 'x') {
+            drawArrow(head);
             head--;
             q6(totalString, head);
         }
         else if(totalString.charAt(head) == '#') {
+            drawArrow(head);
             head--;
             q7(totalString, head);
+        }
+        else {
+            drawArrow(head);
+            document.getElementById("output").innerHTML = "Rejected";
         }
     }
 
     function q7(totalString, head) {
-        drawArrow(head);
         if(totalString.charAt(head) == '0' || totalString.charAt(head) == '1') {
+            drawArrow(head);
             head--;
             q7(totalString, head);
         }
         else if(totalString.charAt(head) == 'x') {
+            drawArrow(head);
             head++;
             q1(totalString, head);
+        }
+        else {
+            drawArrow(head);
+            document.getElementById("output").innerHTML = "Rejected";
         }
     }
 
     function q8(totalString, head) {
-        drawArrow(head);
         if(totalString.charAt(head) == 'x') {
+            drawArrow(head);
             head++;
             q8(totalString, head);
         }
         else {
+            drawArrow(head);
             head++;
             qAccept(totalString, head);
         }
     }
 
     function qAccept(totalString, head) {
-        drawArrow(head);
-        if(leftString != "" || rightString != "")
-            document.getElementById("output").innerHTML = "Accepted";
+        if(leftString != "" || rightString != "") {
+            drawArrow(head);
+            document.getElementById("output").innerHTML = "Accepted"; 
+        }
+        else {
+            drawArrow(head);
+            document.getElementById("output").innerHTML = "Rejected";
+        }
+            
     }
 }
 

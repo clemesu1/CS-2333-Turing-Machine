@@ -35,6 +35,7 @@ var leftString;
 var rightString;
 // Process Input String
 function processInput() {
+    document.getElementById("output").innerHTML = "";
     actx.clearRect(0, 0, canvas.width, canvas.height);
     nctx.clearRect(0, 0, canvas.width, canvas.height);
     leftIndex = 0;
@@ -56,6 +57,9 @@ function processInput() {
         var tapeSize = leftString.length + rightString.length + 1;
         nctx.stroke();
     }
+    else {
+        document.getElementById("output").innerHTML = "Please have the two sides be of equal length.";
+    }
     runMachine(totalString);
 }
 
@@ -67,7 +71,6 @@ function checkString(right, left) {
     totalString = left + '#' + right;
     return totalString;
 }
-var complete = false;
 // Draw Arrow on screen over specified tape
 function drawArrow(position) {
     var x = 0;
@@ -227,7 +230,6 @@ function runMachine(totalString) {
         drawArrow(head);
         if(leftString != "" || rightString != "")
             document.getElementById("output").innerHTML = "Accepted";
-        complete = true;
     }
 }
 

@@ -6,7 +6,7 @@ html {
 
 button {
     background-color: navy;
-    /*font-family: "Arial"; */
+    font-family: "Arial";
     border: none;
     border-radius: 10px;
     margin-left: 10px;

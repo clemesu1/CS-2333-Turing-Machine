@@ -1,14 +1,14 @@
 html {
     background-color: lightblue;
-    font-family: "Comic Sans MS";
+    font-family: "Arial";
     font-size: 20px;
 }
 
 button {
-    background-color: navy; /* Green */
-    font-family: "Comic Sans MS";
+    background-color: navy;
+    /*font-family: "Arial"; */
     border: none;
-    border-radius: 100%;
+    border-radius: 10px;
     margin-left: 10px;
     color: white;
     padding: 15px 32px;
@@ -20,7 +20,7 @@ button {
 
 input {
     background-color: rgb(185, 214, 224);
-    font-family: "Comic Sans MS";
+    font-family: "Arial";
     font-size: 16px;
 }
 
